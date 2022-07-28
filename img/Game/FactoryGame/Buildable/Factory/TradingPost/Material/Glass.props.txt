@@ -1,0 +1,136 @@
+TwoSided = false
+bDisableDepthTest = false
+bIsMasked = false
+ReferencedTextures[2] =
+{
+    ReferencedTextures[0] = Texture2D'/Game/FactoryGame/Buildable/Factory/TradingPost/Texture/Window_dirt.Window_dirt'
+    ReferencedTextures[1] = Texture2D'/Game/FactoryGame/Buildable/Factory/TradingPost/Texture/Window_Distort.Window_Distort'
+}
+Expressions[0] = {}
+CachedExpressionData =
+{
+    Parameters =
+    {
+        Entries[5] =
+        {
+            Entries[0] =
+            {
+                ParameterInfos[12] =
+                {
+                    ParameterInfos[0] = { Name=Roughness }
+                    ParameterInfos[1] = { Name=RefractionSide }
+                    ParameterInfos[2] = { Name=OffsetV }
+                    ParameterInfos[3] = { Name=OffsetU }
+                    ParameterInfos[4] = { Name=Power }
+                    ParameterInfos[5] = { Name=RefractionFront }
+                    ParameterInfos[6] = { Name=ReflectionFront }
+                    ParameterInfos[7] = { Name=VScale }
+                    ParameterInfos[8] = { Name=UScale }
+                    ParameterInfos[9] = { Name=OpacitySide }
+                    ParameterInfos[10] = { Name=ReflectionSide }
+                    ParameterInfos[11] = { Name=OpacityFront }
+                }
+            }
+            Entries[1] =
+            {
+                ParameterInfos[3] =
+                {
+                    ParameterInfos[0] = { Name=MetallicStrength }
+                    ParameterInfos[1] = { Name=ColorSecondary }
+                    ParameterInfos[2] = { Name=ColorBase }
+                }
+            }
+            Entries[2] = { ParameterInfos[0]={} }
+            Entries[3] = { ParameterInfos[0]={} }
+            Entries[4] = { ParameterInfos[0]={} }
+        }
+        ScalarValues[12] =
+        {
+            ScalarValues[0] = 0
+            ScalarValues[1] = 0.8
+            ScalarValues[2] = 0
+            ScalarValues[3] = 0
+            ScalarValues[4] = 3
+            ScalarValues[5] = 1.2
+            ScalarValues[6] = 0.05
+            ScalarValues[7] = 1
+            ScalarValues[8] = 1
+            ScalarValues[9] = 0.2
+            ScalarValues[10] = 1
+            ScalarValues[11] = 0.05
+        }
+        VectorValues[3] =
+        {
+            VectorValues[0] = { R=0, G=0, B=0, A=1 }
+            VectorValues[1] = { R=0.765625, G=0.765625, B=0.765625, A=1 }
+            VectorValues[2] = { R=0.602213, G=0.956201, B=0.963542, A=1 }
+        }
+        TextureValues[0] = {}
+    }
+    ReferencedTextures[2] =
+    {
+        ReferencedTextures[0] = Texture2D'/Game/FactoryGame/Buildable/Factory/TradingPost/Texture/Window_dirt.Window_dirt'
+        ReferencedTextures[1] = Texture2D'/Game/FactoryGame/Buildable/Factory/TradingPost/Texture/Window_Distort.Window_Distort'
+    }
+}
+BlendMode = BLEND_Translucent (2)
+OpacityMaskClipValue = 0.333
+CollectedTextureParameters[0] = {}
+CollectedScalarParameters[12] =
+{
+    CollectedScalarParameters[0] = { Value=0, Name=Roughness, Group=None }
+    CollectedScalarParameters[1] = { Value=0.8, Name=RefractionSide, Group=None }
+    CollectedScalarParameters[2] = { Value=0, Name=OffsetV, Group=None }
+    CollectedScalarParameters[3] = { Value=0, Name=OffsetU, Group=None }
+    CollectedScalarParameters[4] = { Value=3, Name=Power, Group=None }
+    CollectedScalarParameters[5] = { Value=1.2, Name=RefractionFront, Group=None }
+    CollectedScalarParameters[6] = { Value=0.05, Name=ReflectionFront, Group=None }
+    CollectedScalarParameters[7] = { Value=1, Name=VScale, Group=None }
+    CollectedScalarParameters[8] = { Value=1, Name=UScale, Group=None }
+    CollectedScalarParameters[9] = { Value=0.2, Name=OpacitySide, Group=None }
+    CollectedScalarParameters[10] = { Value=1, Name=ReflectionSide, Group=None }
+    CollectedScalarParameters[11] = { Value=0.05, Name=OpacityFront, Group=None }
+}
+CollectedVectorParameters[3] =
+{
+    CollectedVectorParameters[0] =
+    {
+        Value = { R=0, G=0, B=0, A=1 }
+        Name = MetallicStrength
+        Group = None
+    }
+    CollectedVectorParameters[1] =
+    {
+        Value = { R=0.765625, G=0.765625, B=0.765625, A=1 }
+        Name = ColorSecondary
+        Group = None
+    }
+    CollectedVectorParameters[2] =
+    {
+        Value = { R=0.602213, G=0.956201, B=0.963542, A=1 }
+        Name = ColorBase
+        Group = None
+    }
+}
+FlattenedTexture = None
+MobileBaseTexture = None
+MobileNormalTexture = None
+bUseMobileSpecular = false
+MobileSpecularPower = 16
+MobileSpecularMask = MSM_Constant (0)
+MobileMaskTexture = None
+TextureStreamingData[2] =
+{
+    TextureStreamingData[0] =
+    {
+        SamplingScale = 1
+        UVChannelIndex = 0
+        TextureName = Window_dirt
+    }
+    TextureStreamingData[1] =
+    {
+        SamplingScale = 1
+        UVChannelIndex = 0
+        TextureName = Window_Distort
+    }
+}

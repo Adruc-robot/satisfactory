@@ -1,0 +1,110 @@
+Materials[8] =
+{
+    Materials[0] = Material3'/Game/FactoryGame/Buildable/Factory/TradingPost/Material/Interior_One.Interior_One'
+    Materials[1] = Material3'/Game/FactoryGame/Buildable/Factory/TradingPost/Material/Interior_Roof.Interior_Roof'
+    Materials[2] = Material3'/Game/FactoryGame/Buildable/Factory/TradingPost/Material/Interior_Two.Interior_Two'
+    Materials[3] = MaterialInstanceConstant'/Game/FactoryGame/Buildable/Factory/TradingPost/Material/Monitor_HubInside.Monitor_HubInside'
+    Materials[4] = Material3'/Game/FactoryGame/Buildable/-Shared/Material/DecalColor_Masked.DecalColor_Masked'
+    Materials[5] = Material3'/Game/FactoryGame/Buildable/-Shared/Material/Decal_Normal.Decal_Normal'
+    Materials[6] = MaterialInstanceConstant'/Game/FactoryGame/Buildable/Factory/TradingPost/Material/MI_TradingPostStage6.MI_TradingPostStage6'
+    Materials[7] = MaterialInstanceConstant'/Game/FactoryGame/Buildable/Factory/TradingPost/Material/Glass_Inst.Glass_Inst'
+}
+SourceModels[0] = {}
+StaticMaterials[8] =
+{
+    StaticMaterials[0] =
+    {
+        MaterialInterface = Material3'/Game/FactoryGame/Buildable/Factory/TradingPost/Material/Interior_One.Interior_One'
+        MaterialSlotName = InteriorOne
+        UVChannelData =
+        {
+            bInitialized = true
+            bOverrideDensities = false
+            LocalUVDensities[4] = { 1351.73, 0, 0, 0 }
+        }
+    }
+    StaticMaterials[1] =
+    {
+        MaterialInterface = Material3'/Game/FactoryGame/Buildable/Factory/TradingPost/Material/Interior_Roof.Interior_Roof'
+        MaterialSlotName = Interior_Roof
+        UVChannelData =
+        {
+            bInitialized = true
+            bOverrideDensities = false
+            LocalUVDensities[4] = { 848.134, 0, 0, 0 }
+        }
+    }
+    StaticMaterials[2] =
+    {
+        MaterialInterface = Material3'/Game/FactoryGame/Buildable/Factory/TradingPost/Material/Interior_Two.Interior_Two'
+        MaterialSlotName = InteriorTwo
+        UVChannelData =
+        {
+            bInitialized = true
+            bOverrideDensities = false
+            LocalUVDensities[4] = { 1691.26, 0, 0, 0 }
+        }
+    }
+    StaticMaterials[3] =
+    {
+        MaterialInterface = MaterialInstanceConstant'/Game/FactoryGame/Buildable/Factory/TradingPost/Material/Monitor_HubInside.Monitor_HubInside'
+        MaterialSlotName = monitor
+        UVChannelData =
+        {
+            bInitialized = true
+            bOverrideDensities = false
+            LocalUVDensities[4] = { 204.818, 0, 0, 0 }
+        }
+    }
+    StaticMaterials[4] =
+    {
+        MaterialInterface = Material3'/Game/FactoryGame/Buildable/-Shared/Material/DecalColor_Masked.DecalColor_Masked'
+        MaterialSlotName = Decal_Color
+        UVChannelData =
+        {
+            bInitialized = true
+            bOverrideDensities = false
+            LocalUVDensities[4] = { 302.715, 244.648, 244.648, 244.648 }
+        }
+    }
+    StaticMaterials[5] =
+    {
+        MaterialInterface = Material3'/Game/FactoryGame/Buildable/-Shared/Material/Decal_Normal.Decal_Normal'
+        MaterialSlotName = Decal_Normal
+        UVChannelData =
+        {
+            bInitialized = true
+            bOverrideDensities = false
+            LocalUVDensities[4] = { 1846.76, 0, 0, 0 }
+        }
+    }
+    StaticMaterials[6] =
+    {
+        MaterialInterface = MaterialInstanceConstant'/Game/FactoryGame/Buildable/Factory/TradingPost/Material/MI_TradingPostStage6.MI_TradingPostStage6'
+        MaterialSlotName = Factory_Inst
+        UVChannelData =
+        {
+            bInitialized = true
+            bOverrideDensities = false
+            LocalUVDensities[4] = { 4033.05, 0, 0, 0 }
+        }
+    }
+    StaticMaterials[7] =
+    {
+        MaterialInterface = MaterialInstanceConstant'/Game/FactoryGame/Buildable/Factory/TradingPost/Material/Glass_Inst.Glass_Inst'
+        MaterialSlotName = Glass
+        UVChannelData =
+        {
+            bInitialized = true
+            bOverrideDensities = false
+            LocalUVDensities[4] = { 224.674, 0, 0, 0 }
+        }
+    }
+}
+Sockets[6] = {  }
+ExtendedBounds =
+{
+    Origin = { X=-116.124, Y=-7.16101, Z=450.682 }
+    BoxExtent = { X=689.113, Y=1296.11, Z=445.727 }
+    SphereRadius = 1506.02
+}

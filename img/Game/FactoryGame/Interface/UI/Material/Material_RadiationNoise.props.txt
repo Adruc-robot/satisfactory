@@ -1,0 +1,76 @@
+TwoSided = false
+bDisableDepthTest = false
+bIsMasked = false
+ReferencedTextures[1] =
+{
+    ReferencedTextures[0] = Texture2D'/Game/FactoryGame/Interface/UI/Assets/Materials/RadtiationNoise.RadtiationNoise'
+}
+Expressions[0] = {}
+CachedExpressionData =
+{
+    Parameters =
+    {
+        Entries[5] =
+        {
+            Entries[0] =
+            {
+                ParameterInfos[5] =
+                {
+                    ParameterInfos[0] = { Name=Vignette }
+                    ParameterInfos[1] = { Name=Amount }
+                    ParameterInfos[2] = { Name=Blend }
+                    ParameterInfos[3] = { Name=MaxNoise }
+                    ParameterInfos[4] = { Name=VinjetteMultiplier }
+                }
+            }
+            Entries[1] =
+            {
+                ParameterInfos[1] =
+                {
+                    ParameterInfos[0] = { Name=VignetteColor }
+                }
+            }
+            Entries[2] = { ParameterInfos[0]={} }
+            Entries[3] = { ParameterInfos[0]={} }
+            Entries[4] = { ParameterInfos[0]={} }
+        }
+        ScalarValues[5] = { 0, 1, 0, 50, 5 }
+        VectorValues[1] =
+        {
+            VectorValues[0] = { R=0.644642, G=0.916667, B=0.176649, A=1 }
+        }
+        TextureValues[0] = {}
+    }
+    ReferencedTextures[1] =
+    {
+        ReferencedTextures[0] = Texture2D'/Game/FactoryGame/Interface/UI/Assets/Materials/RadtiationNoise.RadtiationNoise'
+    }
+}
+BlendMode = BLEND_Opaque (0)
+OpacityMaskClipValue = 0.333
+CollectedTextureParameters[0] = {}
+CollectedScalarParameters[5] =
+{
+    CollectedScalarParameters[0] = { Value=0, Name=Vignette, Group=None }
+    CollectedScalarParameters[1] = { Value=1, Name=Amount, Group=None }
+    CollectedScalarParameters[2] = { Value=0, Name=Blend, Group=None }
+    CollectedScalarParameters[3] = { Value=50, Name=MaxNoise, Group=None }
+    CollectedScalarParameters[4] = { Value=5, Name=VinjetteMultiplier, Group=None }
+}
+CollectedVectorParameters[1] =
+{
+    CollectedVectorParameters[0] =
+    {
+        Value = { R=0.644642, G=0.916667, B=0.176649, A=1 }
+        Name = VignetteColor
+        Group = None
+    }
+}
+FlattenedTexture = None
+MobileBaseTexture = None
+MobileNormalTexture = None
+bUseMobileSpecular = false
+MobileSpecularPower = 16
+MobileSpecularMask = MSM_Constant (0)
+MobileMaskTexture = None
+TextureStreamingData[0] = {}

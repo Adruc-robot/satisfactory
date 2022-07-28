@@ -1,0 +1,74 @@
+TwoSided = false
+bDisableDepthTest = false
+bIsMasked = false
+ReferencedTextures[4] =
+{
+    ReferencedTextures[0] = Texture2D'/Game/FactoryGame/Buildable/Factory/TradingPost/Texture/Interior_Roof1_albedo.Interior_Roof1_albedo'
+    ReferencedTextures[1] = Texture2D'/Game/FactoryGame/Buildable/Factory/TradingPost/Texture/Interior_Roof1_emissive.Interior_Roof1_emissive'
+    ReferencedTextures[2] = Texture2D'/Game/FactoryGame/Buildable/Factory/TradingPost/Texture/Interior_Roof1_normal.Interior_Roof1_normal'
+    ReferencedTextures[3] = Texture2D'/Game/FactoryGame/Buildable/Factory/TradingPost/Texture/Interior_Roof1_Reflection.Interior_Roof1_Reflection'
+}
+Expressions[0] = {}
+CachedExpressionData =
+{
+    Parameters =
+    {
+        Entries[5] =
+        {
+            Entries[0] =
+            {
+                ParameterInfos[1] =
+                {
+                    ParameterInfos[0] = { Name=GlowBoost }
+                }
+            }
+            Entries[1] =
+            {
+                ParameterInfos[1] =
+                {
+                    ParameterInfos[0] = { Name=Emissive Color }
+                }
+            }
+            Entries[2] = { ParameterInfos[0]={} }
+            Entries[3] = { ParameterInfos[0]={} }
+            Entries[4] = { ParameterInfos[0]={} }
+        }
+        ScalarValues[1] = { 2 }
+        VectorValues[1] =
+        {
+            VectorValues[0] = { R=1.19389, G=0.731968, B=0.310908, A=1 }
+        }
+        TextureValues[0] = {}
+    }
+    ReferencedTextures[4] =
+    {
+        ReferencedTextures[0] = Texture2D'/Game/FactoryGame/Buildable/Factory/TradingPost/Texture/Interior_Roof1_Reflection.Interior_Roof1_Reflection'
+        ReferencedTextures[1] = Texture2D'/Game/FactoryGame/Buildable/Factory/TradingPost/Texture/Interior_Roof1_normal.Interior_Roof1_normal'
+        ReferencedTextures[2] = Texture2D'/Game/FactoryGame/Buildable/Factory/TradingPost/Texture/Interior_Roof1_emissive.Interior_Roof1_emissive'
+        ReferencedTextures[3] = Texture2D'/Game/FactoryGame/Buildable/Factory/TradingPost/Texture/Interior_Roof1_albedo.Interior_Roof1_albedo'
+    }
+}
+BlendMode = BLEND_Opaque (0)
+OpacityMaskClipValue = 0.333
+CollectedTextureParameters[0] = {}
+CollectedScalarParameters[1] =
+{
+    CollectedScalarParameters[0] = { Value=2, Name=GlowBoost, Group=None }
+}
+CollectedVectorParameters[1] =
+{
+    CollectedVectorParameters[0] =
+    {
+        Value = { R=1.19389, G=0.731968, B=0.310908, A=1 }
+        Name = Emissive Color
+        Group = None
+    }
+}
+FlattenedTexture = None
+MobileBaseTexture = None
+MobileNormalTexture = None
+bUseMobileSpecular = false
+MobileSpecularPower = 16
+MobileSpecularMask = MSM_Constant (0)
+MobileMaskTexture = None
+TextureStreamingData[0] = {}

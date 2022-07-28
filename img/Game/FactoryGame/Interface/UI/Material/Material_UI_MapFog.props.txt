@@ -1,0 +1,86 @@
+TwoSided = false
+bDisableDepthTest = false
+bIsMasked = false
+ReferencedTextures[6] =
+{
+    ReferencedTextures[0] = Texture2D'/Game/FactoryGame/Interface/UI/Assets/MapTest/HeightData_Test.HeightData_Test'
+    ReferencedTextures[1] = Texture2D'/Game/FactoryGame/Interface/UI/Assets/MapTest/Map_Test_Gradient.Map_Test_Gradient'
+    ReferencedTextures[2] = Texture2D'/Game/FactoryGame/Interface/UI/Assets/MapTest/SlicedMap/Map_0-0.Map_0-0'
+    ReferencedTextures[3] = Texture2D'/Game/FactoryGame/Interface/UI/Assets/MapTest/SlicedMap/Map_0-1.Map_0-1'
+    ReferencedTextures[4] = Texture2D'/Game/FactoryGame/Interface/UI/Assets/MapTest/SlicedMap/Map_1-0.Map_1-0'
+    ReferencedTextures[5] = Texture2D'/Game/FactoryGame/Interface/UI/Assets/MapTest/SlicedMap/Map_1-1.Map_1-1'
+}
+Expressions[0] = {}
+CachedExpressionData =
+{
+    Parameters =
+    {
+        Entries[5] =
+        {
+            Entries[0] =
+            {
+                ParameterInfos[1] =
+                {
+                    ParameterInfos[0] = { Name=BlurScale }
+                }
+            }
+            Entries[1] = { ParameterInfos[0]={} }
+            Entries[2] =
+            {
+                ParameterInfos[2] =
+                {
+                    ParameterInfos[0] = { Name=Content }
+                    ParameterInfos[1] = { Name=HeightData }
+                }
+            }
+            Entries[3] = { ParameterInfos[0]={} }
+            Entries[4] = { ParameterInfos[0]={} }
+        }
+        ScalarValues[1] = { 1 }
+        VectorValues[0] = {}
+        TextureValues[2] =
+        {
+            TextureValues[0] = Texture2D'/Game/FactoryGame/Interface/UI/Assets/MapTest/Map_Test_Gradient.Map_Test_Gradient'
+            TextureValues[1] = Texture2D'/Game/FactoryGame/Interface/UI/Assets/MapTest/HeightData_Test.HeightData_Test'
+        }
+    }
+    ReferencedTextures[7] =
+    {
+        ReferencedTextures[0] = Texture2D'/Game/FactoryGame/Interface/UI/Assets/MapTest/SlicedMap/Map_0-0.Map_0-0'
+        ReferencedTextures[1] = Texture2D'/Game/FactoryGame/Interface/UI/Assets/MapTest/HeightData_Test.HeightData_Test'
+        ReferencedTextures[3] = Texture2D'/Game/FactoryGame/Interface/UI/Assets/MapTest/Map_Test_Gradient.Map_Test_Gradient'
+        ReferencedTextures[4] = Texture2D'/Game/FactoryGame/Interface/UI/Assets/MapTest/SlicedMap/Map_1-0.Map_1-0'
+        ReferencedTextures[5] = Texture2D'/Game/FactoryGame/Interface/UI/Assets/MapTest/SlicedMap/Map_0-1.Map_0-1'
+        ReferencedTextures[6] = Texture2D'/Game/FactoryGame/Interface/UI/Assets/MapTest/SlicedMap/Map_1-1.Map_1-1'
+    }
+}
+BlendMode = BLEND_Translucent (2)
+OpacityMaskClipValue = 0.333
+CollectedTextureParameters[2] =
+{
+    CollectedTextureParameters[0] =
+    {
+        Texture = Texture2D'/Game/FactoryGame/Interface/UI/Assets/MapTest/Map_Test_Gradient.Map_Test_Gradient'
+        Name = Content
+        Group = None
+    }
+    CollectedTextureParameters[1] =
+    {
+        Texture = Texture2D'/Game/FactoryGame/Interface/UI/Assets/MapTest/HeightData_Test.HeightData_Test'
+        Name = HeightData
+        Group = None
+    }
+}
+CollectedScalarParameters[1] =
+{
+    CollectedScalarParameters[0] = { Value=1, Name=BlurScale, Group=None }
+}
+CollectedVectorParameters[0] = {}
+FlattenedTexture = None
+MobileBaseTexture = None
+MobileNormalTexture = None
+bUseMobileSpecular = false
+MobileSpecularPower = 16
+MobileSpecularMask = MSM_Constant (0)
+MobileMaskTexture = None
+TextureStreamingData[0] = {}

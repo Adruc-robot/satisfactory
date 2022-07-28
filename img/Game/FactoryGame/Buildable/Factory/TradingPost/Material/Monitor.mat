@@ -1,0 +1,3 @@
+Diffuse=Monitor_albedo
+Emissive=Monitor_emissive
+Other[0]=Monitor_refl

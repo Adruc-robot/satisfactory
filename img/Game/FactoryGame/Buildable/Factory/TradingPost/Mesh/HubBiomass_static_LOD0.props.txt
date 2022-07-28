@@ -1,0 +1,50 @@
+Materials[3] =
+{
+    Materials[0] = MaterialInstanceConstant'/Game/FactoryGame/Buildable/Factory/TradingPost/Material/MI_HubBiomass.MI_HubBiomass'
+    Materials[1] = Material3'/Game/FactoryGame/Buildable/-Shared/Material/DecalColor_Masked.DecalColor_Masked'
+    Materials[2] = Material3'/Game/FactoryGame/Buildable/-Shared/Material/Decal_Normal.Decal_Normal'
+}
+SourceModels[0] = {}
+StaticMaterials[3] =
+{
+    StaticMaterials[0] =
+    {
+        MaterialInterface = MaterialInstanceConstant'/Game/FactoryGame/Buildable/Factory/TradingPost/Material/MI_HubBiomass.MI_HubBiomass'
+        MaterialSlotName = Factory_Inst
+        UVChannelData =
+        {
+            bInitialized = true
+            bOverrideDensities = false
+            LocalUVDensities[4] = { 3078.21, 0, 0, 0 }
+        }
+    }
+    StaticMaterials[1] =
+    {
+        MaterialInterface = Material3'/Game/FactoryGame/Buildable/-Shared/Material/DecalColor_Masked.DecalColor_Masked'
+        MaterialSlotName = Decal_Color
+        UVChannelData =
+        {
+            bInitialized = true
+            bOverrideDensities = false
+            LocalUVDensities[4] = { 158.427, 0, 0, 0 }
+        }
+    }
+    StaticMaterials[2] =
+    {
+        MaterialInterface = Material3'/Game/FactoryGame/Buildable/-Shared/Material/Decal_Normal.Decal_Normal'
+        MaterialSlotName = Decal_Normal
+        UVChannelData =
+        {
+            bInitialized = true
+            bOverrideDensities = false
+            LocalUVDensities[4] = { 626.971, 0, 0, 0 }
+        }
+    }
+}
+Sockets[0] = {}
+ExtendedBounds =
+{
+    Origin = { X=-1.29686, Y=1.03217, Z=211.609 }
+    BoxExtent = { X=176.331, Y=205.904, Z=215.883 }
+    SphereRadius = 309.72
+}

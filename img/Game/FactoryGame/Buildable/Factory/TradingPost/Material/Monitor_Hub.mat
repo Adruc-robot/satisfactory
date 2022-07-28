@@ -1,0 +1,4 @@
+Diffuse=Monitor_albedo
+Emissive=Monitor_emissive
+Other[0]=Monitor_Hub
+Other[1]=Monitor_refl

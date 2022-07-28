@@ -1,0 +1,4 @@
+Diffuse=Interior_Roof1_albedo
+Normal=Interior_Roof1_normal
+Emissive=Interior_Roof1_emissive
+Other[0]=Interior_Roof1_Reflection
