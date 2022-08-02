@@ -1,3 +1,4 @@
+let multProd = []
 let hoverObject = ''
 const thePath = 'txt/Docs.JSON'
 let reciSort = []
@@ -23,7 +24,7 @@ domReady(function() {
 let newThing = []
 let mainArr = []
 
-function findThingsInDoot() {
+/*function findThingsInDoot() {
     let searchTerm = document.getElementById('finderID').value
     let NativeClasses = []
     //console.log(searchTerm)
@@ -46,159 +47,25 @@ function findThingsInDoot() {
         classString = classString + `${item.DisplayName}|${item.NativeClass}<br>`
     })
     document.querySelectorAll('.toDoList')[0].innerHTML = classString
-}
+}*/
 async function main() {
     doot = await getThings(thePath)
-    //console.log('doot')
-    //console.log(doot)
-    for (let one in doot) {
-        if (typeof doot[one] == "object") {
-            for (let two in doot[one]) {
-                if (typeof doot[one][two] == 'object') {
-                    for (let three in doot[one][two]) {
-                        if (typeof doot[one][two][three] == 'object') {
-                            let linkage = doot[one][two][three].ClassName.split('_')[1]
-                            //if (doot[one][two][three].mDisplayName) {
-
-                                //let linkage = doot[one][two][three].mDisplayName.replace(' ','').replace('.','').replace('™','')
-
-                                if (doot[one][two][three].mDisplayName == 'Iron Ingot') {
-                                    linkage = 'IronIngot'
-                                }
-                                if (!newThing[linkage]) {
-                                    //initialize the entry
-                                    newThing[linkage] = []
-                                }
-                                //Set up the name that'll display on the  
-                                if (doot[one][two][three].mDisplayName && !newThing[linkage].DisplayName) {
-                                    newThing[linkage].DisplayName = doot[one][two][three].mDisplayName
-                                }
-                                if (!doot[one][two][three].mDisplayName) {
-                                    if (!newThing['nomDisplayName']) {
-                                        newThing['nomDisplayName'] = []
-                                    }
-                                    linkage = 'nomDisplayName'
-                                }
-                                //Set up the path of the image
-                                if (doot[one][two][three].mSmallIcon && !newThing[linkage].imgLink) {
-                                    let fullImgLink = doot[one][two][three].mSmallIcon
-                                    newThing[linkage].imgLink = `img/${fullImgLink.substring(fullImgLink.indexOf('/') + 1, fullImgLink.length).split('.')[0]}.png`
-                                }
-                                if (doot[one][two][three].mIngredients && !newThing[linkage].recipe) {
-                                    
-                                    //newThing[linkage].recipe = doot[one][two][three].mIngredients
-                                    let ingList = []
-                                    doot[one][two][three].mIngredients.replace('((','').replace('))','').split('),(').forEach(item => {
-                                        ingList.push({"name": item.split(',')[0].split('.')[1].split('_')[1], "amount":item.split(',')[1].split('=')[1]})
-                                    })
-                                    newThing[linkage].recipe = ingList
-                                    newThing[linkage].mIngredients = doot[one][two][three].mIngredients
-    
-                                }
-                                //Push it to the array
-                                newThing[linkage].push([{'objType' : doot[one][two][three].ClassName.split('_')[0], 'data': [ doot[one][two][three] ] }])
-                            //}
-                            let mDisplayName = doot[one][two][three].mDisplayName
-                            let fullImgLink = doot[one][two][three].mSmallIcon
-                            let mIngredients = doot[one][two][three].mIngredients
-                            let classLinkArr = doot[one][two][three].ClassName.split('_')
-                            let classLink = ''
-                            for (cl = 1; cl < classLinkArr.length - 1; cl++) {
-                                if (cl !== classLinkArr.length - 1) {
-                                    classLink += `${classLinkArr[cl]}_`
-                                } else {
-                                    classLink += classLinkArr[cl]
-                                }
-                                
-                            }
-                            let classData = doot[one][two][three]
-                            //need to locate the index for the item - this is done by using the DisplayName or ClassLink - ClassLink only when there is no mDisplayName
-                            let iIndex = 0
-                            if (!mDisplayName) {
-                                for (i = 0; i < mainArr.length; i++) {
-                                    if (mainArr[i].ClassLink) {
-                                        if (mainArr[i].ClassLink == classLink) {
-                                            iIndex = i
-                                            i = mainArr.length + 1
-                                        }
-                                    }
-                                }
-                            } else {
-                                for (i = 0; i < mainArr.length; i++) {
-                                    if (mainArr[i].DisplayName) {
-                                        if (mainArr[i].DisplayName == mDisplayName) {
-                                            iIndex = i
-                                            i = mainArr.length + 1
-                                        }
-                                    }
-                                }
-                            }
-                            if (iIndex == 0) {
-                                //this thing was not found
-                                let newOBJ = {}
-                                if (mDisplayName) {
-                                    newOBJ.DisplayName = mDisplayName
-                                }
-                                if (fullImgLink) {
-                                    newOBJ.imgLink = `img/${fullImgLink.substring(fullImgLink.indexOf('/') + 1, fullImgLink.length).split('.')[0]}.png`
-                                }
-                                if (mIngredients) {
-                                    newOBJ.mIngredients = mIngredients
-                                }
-                                if (classLink) {
-                                    newOBJ.ClassLink = classLink
-                                }
-                                newOBJ.data = [ classData ]
-                                mainArr.push(newOBJ)
-                            } else {
-                                //console.log(mainArr[iIndex])
-                                //console.log('DisplayName' in mainArr[i])
-                                //if (!('DisplayName' in mainArr[i]) && mDisplayName) {
-                                if (!mainArr[iIndex].DisplayName && mDisplayName) {
-                                    mainArr[iIndex].DisplayName = mDisplayName
-                                }
-                                if (!mainArr[iIndex].imgLink && fullImgLink) {
-                                    mainArr[iIndex].imgLink = `img/${fullImgLink.substring(fullImgLink.indexOf('/') + 1, fullImgLink.length).split('.')[0]}.png`
-                                }
-                                if (!mainArr[iIndex].mIngredients && mIngredients) {
-                                    mainArr[iIndex].mIngredients = mIngredients
-                                }
-                                if (!mainArr[iIndex].ClassLink && classLink) {
-                                    mainArr[iIndex].ClassLink = classLink
-                                }
-                                mainArr[iIndex].data.push( classData)
-                            }
-
-                        }
-                }
-
-            }
-
-            }
-        }
-    }
 
     let descArr = []
     for (let xx = 0; xx < doot.length; xx++) {
         //console.log(doot[xx].Classes.length)
         for (let yy = 0; yy < doot[xx].Classes.length; yy++) {
             //console.log(doot[xx].Classes[yy])
-            if (doot[xx].Classes[yy].ClassName.includes('Desc_')) {
+            if (doot[xx].Classes[yy].ClassName.includes('Desc_') || doot[xx].Classes[yy].ClassName.includes('BP_') || doot[xx].Classes[yy].ClassName.includes('Foundation_')) {
+            //if (doot[xx].Classes[yy].ClassName.includes('Desc_')) {
                 let item = doot[xx].Classes[yy]
                 let sObj = {}
-                if (item.mDisplayName) {
-                    sObj.DisplayName = item.mDisplayName
-                }
-                if (item.mSmallIcon) {
-                    let fullImgLink = item.mSmallIcon
-                    sObj.imgLink = `img/${fullImgLink.substring(fullImgLink.indexOf('/') + 1, fullImgLink.length).split('.')[0]}.png`
-                }
-                sObj.descLink = item.ClassName
                 sObj.descData = item
                 descArr.push(sObj)
             }
         }
     }
+    //console.log(descArr.length)
     let reciArr = []
     for (let xx = 0; xx < doot.length; xx++) {
         //console.log(doot[xx].Classes.length)
@@ -212,9 +79,91 @@ async function main() {
             }
         }
     }
+
     reciArr.forEach(item => {
+        if (item.reciData.mIngredients) {
+            //console.log(item.reciData.mIngredients)
+            //console.log(item.reciData.mIngredients.split('.'))
+            item.ings = []
+            item.reciData.mIngredients.split('.').forEach(a => {
+                if (a.includes('Amount')) {
+                    let ingObj = {}
+                    let thisThing = descArr.filter(b => { return b.descData.ClassName === a.split('"\',Amount=')[0]})
+                    
+                    if (thisThing.length > 0) {
+                        if (a.split('"\',Amount=')[0].includes('BP_') || a.split('"\',Amount=')[0].includes('Desc_')) {
+
+                            //console.log(a.split('"\',Amount=')[0])
+                            //console.log(thisThing[0].descData.mDisplayName)
+                            let fullImgLink = thisThing[0].descData.mSmallIcon
+                            //if (thisThing[0].descData.mDisplayName) {
+                                ingObj.itemName = thisThing[0].descData.mDisplayName
+                            //} else {
+                                //ingObj
+                            //}
+
+                            ingObj.imgLink = `img/${fullImgLink.substring(fullImgLink.indexOf('/') + 1, fullImgLink.length).split('.')[0]}.png`
+                            if (thisThing[0].descData.mForm === 'RF_LIQUID') {
+                                ingObj.amount = `<span class="amount">${a.split('"\',Amount=')[1].split(')')[0] / 1000} </span><span class="unit">m</span><span class="superscript">3</span>`
+                            } else {
+                                ingObj.amount = `<span class="amount">${a.split('"\',Amount=')[1].split(')')[0]}</span>`
+                            }
+                            /*ingObj.amount = a.split('"\',Amount=')[1].split(')')[0]
+                            if (thisThing[0].descData.mForm === 'RF_LIQUID') {
+                                ingObj.unit = '<span class="unit">m</span><span class="superscript">3</span>'
+                                ingObj.amount = ingObj.amount / 1000
+                            }*/
+                            item.ings.push(ingObj)
+                        }
+                    } else { 
+                        //console.log('no ing found')
+                        //console.log(item)
+                    }
+                    //console.log(a.split('"\',Amount=')[1].split(')')[0])
+                }
+            })
+            //console.log(item.reciData.mIngredients.split('.'))
+        }
         if (item.reciData.mProduct) {
-            
+            let product = item.reciData.mProduct.split('),')
+            item.prods = []
+            if (product.length > 0) {
+                //console.log(item.reciData.mProduct.split('),'))
+                product.forEach(pI => {
+                    //console.log(`product: ${pI.split('.')[1].split('"\',')[0]}`)
+                    //console.log(`amount: ${pI.split('Amount=')[1].replace('))','')}`)
+                    //console.log(pI)
+                    let thisThing = descArr.filter(a => { return a.descData.ClassName === pI.split('.')[1].split('"\',')[0]})
+                    if (thisThing.length > 0) {
+                        
+                        //console.log(thisThing)
+
+                        let prodObj = {}
+                        if (thisThing[0].descData.mDisplayName) {
+
+                            prodObj.itemName = thisThing[0].descData.mDisplayName
+                        } else {
+                            prodObj.itemName = item.reciData.mDisplayName
+                        }
+                        let fullImgLink = thisThing[0].descData.mSmallIcon
+                        prodObj.imgLink = `img/${fullImgLink.substring(fullImgLink.indexOf('/') + 1, fullImgLink.length).split('.')[0]}.png`
+                        prodObj.ClassName = pI.split('.')[1].split('"\',')[0]
+                        if (thisThing[0].descData.mForm === 'RF_LIQUID') {
+
+                            prodObj.amount = `<span class="amount">${pI.split('Amount=')[1].replace('))','') / 1000} </span><span class="unit">m</span><span class="superscript">3</span>`
+                        } else {
+                            prodObj.amount = `<span class="amount">${pI.split('Amount=')[1].replace('))','')}</span>`
+                        }
+                        /*if (thisThing[0].descData.mForm === 'RF_LIQUID') {
+                            prodObj.unit = '<span class="unit">M</span><span class="superscript">3</span>'
+                        }*/
+
+                        item.prods.push(prodObj)
+                    } else {
+                        console.log('no match found')
+                    }
+                })
+            }
             let filterItem = item.reciData.mProduct.split('.')[1].split('"\',')[0]
             for (let xx = 0; xx < doot.length; xx++) {
                 for (let yy = 0; yy < doot[xx].Classes.length; yy++) {
@@ -246,9 +195,10 @@ async function main() {
     })
 
     reciSort.forEach(item => {
-        if (item.DisplayName && item.imgLink && item.mIngredients) {
+        if (!(item.DisplayName == undefined) && !(item.imgLink == undefined) && !(item.mIngredients == undefined)) {
+        //if (item.DisplayName && item.imgLink && item.mIngredients) {
             let itemHolder = document.createElement('div')
-            itemHolder.classList.add('item','dFlex')
+            itemHolder.classList.add('item','dFlex',item.reciData.ClassName)
 
             let incHolder = document.createElement('div')
             incHolder.classList.add('incrementHolder')
@@ -261,21 +211,44 @@ async function main() {
 
             let plusHolder = document.createElement('div')
             plusHolder.classList.add('plus','clicker')
-
-            let imgTag = document.createElement('img')
-            imgTag.classList.add('viewRecip')
-            imgTag.src = item.imgLink
-            imgTag.loading = 'lazy'
+            
+            let imgHolder = document.createElement('div')
             let titleHolder = document.createElement('h3')
             titleHolder.classList.add('itemName','viewRecip')
-            titleHolder.innerText = item.DisplayName
+            //titleHolder.innerText = item.DisplayName
+            let pCount = 0
+            item.prods.forEach(prod => {
+                //console.log(prod)
+                let imgTag = document.createElement('img')
+                imgTag.classList.add('viewRecip')
+                imgTag.src = prod.imgLink
+                imgTag.loading = 'lazy'
+                if (pCount === 0) {
+                    if (item.DisplayName !== prod.itemName) {
+                        titleHolder.innerText = `${item.DisplayName} (${prod.itemName}`
+                    } else {
 
+                        titleHolder.innerText = `${prod.itemName}`
+                    }
+                    //console.log(prod.itemName)
+                    pCount++
+                } else {
+                    titleHolder.innerText = titleHolder.innerText + ` / ${prod.itemName}`
+                }
+                
+                imgHolder.appendChild(imgTag)
+            })
+            if (titleHolder.innerText.includes('(')) {
+
+                titleHolder.innerText = titleHolder.innerText + ')'
+            }
             itemHolder.appendChild(incHolder)
             incHolder.appendChild(minusHolder)
             incHolder.appendChild(amountHolder)
             incHolder.appendChild(plusHolder)
 
-            itemHolder.appendChild(imgTag)
+            //itemHolder.appendChild(imgTag)
+            itemHolder.appendChild(imgHolder)
             itemHolder.appendChild(titleHolder)
             document.querySelector('.LeftSide').appendChild(itemHolder)
         }
@@ -303,6 +276,7 @@ async function main() {
             }
         })
     })
+    console.log(reciSort)
 }
 function viewRecip(el) {
     if (document.querySelector('.recModal')) {
@@ -311,7 +285,8 @@ function viewRecip(el) {
     let DisplayName = ''
     let imgLink = ''
     let matArr = []
-    el.querySelectorAll('.viewRecip').forEach(item => {    
+    
+    /*el.querySelectorAll('.viewRecip').forEach(item => {    
         switch (item.tagName) {
             case 'IMG':
                 imgLink = `img/${item.src.split('img/')[1]}`
@@ -322,13 +297,28 @@ function viewRecip(el) {
         }
         
     }) 
-    let iOI = reciSort.filter(item => {return item.DisplayName == DisplayName && item.imgLink == imgLink})
+    console.log(el.closest('.item'))*/
+    //let iOI = reciSort.filter(item => {return item.DisplayName == DisplayName && item.imgLink == imgLink})
+    //let ClassNameValue = el.closest('.item').classList
+    //ClassNameValue.forEach(a => {
+        //console.log(a)
+    //})
+
+    let classNameValue = undefined
+    el.closest('.item').classList.forEach(a => {
+        if (a.includes('Recipe_')) {
+            classNameValue = a
+        }
+    })
+    //console.log(classNameValue)
+    //console.log(el.closest('.item').classList.filter(a => {return a.includes('Recipe_') }))
+    let iOI = reciSort.filter(item => {return item.reciData.ClassName === classNameValue})
     console.log(iOI)
     iOI[0].mIngredients.split('.').forEach(ing => {
 
         if (ing.includes('"\',Amount=')) {
             let cNOI = ing.split('"\',Amount=')[0]
-
+            console.log(cNOI)
             let ingAmount = ing.split('"\',Amount=')[1].split(')')[0]
 
             let foundItem = reciSort.filter(item => { 
@@ -338,6 +328,7 @@ function viewRecip(el) {
                     }
                 }
             })
+            console.log(foundItem)
             let ingName = ''
             let imgLink = ''
 
@@ -360,28 +351,18 @@ function viewRecip(el) {
         }
     })
     let ProducedIn = iOI[0].ProducedIn
-    /*console.log(ProducedIn)
-    console.log(ProducedIn.split('/Game/FactoryGame/')[1])*/
-    console.log(ProducedIn.split('/Game/FactoryGame/')[1].split('.')[1].replace(')','').replace(',',''))
+    
+    //console.log(ProducedIn.split('/Game/FactoryGame/')[1].split('.')[1].replace(')','').replace(',',''))
     let timmay = ''
-    //console.log(doot[30].Classes[5])
-    //console.log(doot[30].Classes)
+
     let xx = ''
     let yy = ''
     for (xx = 0; xx < doot.length; xx++) {
-        //console.log(`xx is ${xx}`)
-        //console.log(doot[xx].Classes)
-        //console.log(doot[xx].Classes.length)
-        //console.logI(`yy is ${yy}`)
 
         for (yy = 0; yy < doot[xx].Classes.length; yy++) {
-            //console.log(`yy is ${yy}`)
-            //console.log(doot[xx].Classes[yy].ClassName)
-            //if (doot[xx].Classes[yy].ClassName === ProducedIn.split('/Game/FactoryGame/')[1].split('.')[1].replace(')','').replace(',','')) {
                 if (doot[xx].Classes[yy].ClassName == ProducedIn.split('/Game/FactoryGame/')[1].split('.')[1].replace(')','').replace(',','')) {
                 timmay = doot[xx].Classes[yy]
                 yy = doot[xx].Classes.length + 1
-                //xx = doot.length + 1
             }
         }
         if (yy > doot[xx].Classes.length) {
@@ -409,7 +390,27 @@ function viewRecip(el) {
     recModal.appendChild(recModalData)
     let recModalLeft = document.createElement('div')
     recModalLeft.classList.add('recModalLeft')
-    matArr.forEach(ing => {
+
+    
+    iOI[0].ings.forEach(item => {
+        let ingTile = document.createElement('div')
+        ingTile.classList.add('ingTile')
+        let ingPic = document.createElement('img')
+        ingPic.src = item.imgLink
+        let ingStats = document.createElement('div')
+        ingStats.classList.add('ingStats')
+        let ingAName = document.createElement('div')
+        ingAName.classList.add('ingAName')
+        ingAName.innerHTML = `${item.amount} ${item.itemName}`
+        /*if (item.unit) {
+            ingAName.innerHTML = ingAName.innerText + ` ${item.unit}`
+        }*/
+        ingTile.appendChild(ingPic)
+        ingTile.appendChild(ingAName) 
+        recModalLeft.appendChild(ingTile)
+    })
+
+    /*matArr.forEach(ing => {
         let ingTile = document.createElement('div')
         ingTile.classList.add('ingTile')
         let ingPic = document.createElement('img')
@@ -422,7 +423,7 @@ function viewRecip(el) {
         ingTile.appendChild(ingPic)
         ingTile.appendChild(ingAName) 
         recModalLeft.appendChild(ingTile)
-    })
+    })*/
     recModalData.appendChild(recModalLeft)
     let recModalMid = document.createElement('div')
     //this is going to hold info like produced in
@@ -431,9 +432,9 @@ function viewRecip(el) {
     let builtIn = document.createElement('div')
     builtIn.classList.add('builtIn')
     recModalMid.appendChild(builtIn)
-    //console.log(timmay)
+    
     if (timmay.mDisplayName) {
-        builtIn.innerText = `Produced: ${timmay.mDisplayName}`
+        builtIn.innerText = `Produced by: ${timmay.mDisplayName}`
     } else if (ProducedIn.split('/Game/FactoryGame/')[1].split('.')[1].replace(')','').replace(',','') === 'BP_BuildGun_C') {
         builtIn.innerText = 'Produced: Build Gun'
     } else {
@@ -452,8 +453,8 @@ function viewRecip(el) {
         mfTimeHolder.appendChild(mfTime)
         recModalMid.appendChild(mfTimeHolder)
     }
-    console.log(iOI[0].reciData.mProduct.split('.'))
-    iOI[0].reciData.mProduct.split('.').forEach(item => {
+    //console.log(iOI[0].reciData.mProduct.split('.'))
+    /*iOI[0].reciData.mProduct.split('.').forEach(item => {
         if (item.includes('"\',Amount=')) {
             let thingy = item.split('"\',Amount=')
             console.log(thingy)
@@ -463,27 +464,34 @@ function viewRecip(el) {
                     return a.descData.ClassName === thingy[0]
                 }
             })
-            console.log(thing)
+            //console.log(thing)
         }
 
-    })
+    })*/
     let recModalRight = document.createElement('div')
     recModalRight.classList.add('recModalRight')
     //reuse ingTile
-    let ingTile = document.createElement('div')
-    ingTile.classList.add('ingTile')
-    let ingPic = document.createElement('img')
-    ingPic.src = iOI[0].imgLink
-    let ingStats = document.createElement('div')
-    ingStats.classList.add('ingStats')
-    let ingAName = document.createElement('div')
-    ingAName.classList.add('ingAName')
-    //need to check where this info is stored
-    //ingAName.innerText = `${iOI[0].amount} ${iOI[0].DisplayName}`
-    ingAName.innerText = `${iOI[0].DisplayName}`
-    ingTile.appendChild(ingPic)
-    ingTile.appendChild(ingAName) 
-    recModalRight.appendChild(ingTile)
+    iOI[0].prods.forEach(item => {
+        let ingTile = document.createElement('div')
+        ingTile.classList.add('ingTile')
+        let ingPic = document.createElement('img')
+        ingPic.src = item.imgLink
+        let ingStats = document.createElement('div')
+        ingStats.classList.add('ingStats')
+        let ingAName = document.createElement('div')
+        ingAName.classList.add('ingAName')
+        //need to check where this info is stored
+        //ingAName.innerText = `${iOI[0].amount} ${iOI[0].DisplayName}`
+        ingAName.innerHTML = `${item.amount} ${item.itemName}`
+        /*if (item.unit) {
+            ingAName.innerHTML = ingAName.innerText + ` ${item.unit}`
+        }*/
+        ingTile.appendChild(ingPic)
+        ingTile.appendChild(ingAName)     
+        recModalRight.appendChild(ingTile)
+    })
+    
+    
     recModalData.appendChild(recModalRight)
     document.querySelector('.modalHolder').appendChild(recModal)
 
