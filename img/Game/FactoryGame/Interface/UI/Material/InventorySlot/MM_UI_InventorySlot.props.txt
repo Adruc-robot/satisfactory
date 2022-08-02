@@ -1,10 +1,11 @@
 TwoSided = false
 bDisableDepthTest = false
 bIsMasked = false
-ReferencedTextures[2] =
+ReferencedTextures[3] =
 {
-    ReferencedTextures[0] = Texture2D'/Game/FactoryGame/Interface/UI/Assets/Shared/WindowWidget/Rectangle_Background_Square.Rectangle_Background_Square'
-    ReferencedTextures[1] = Texture2D'/Game/FactoryGame/Interface/UI/Assets/Shared/WindowWidget/TXUI_InventorySlot_EquipmentBorder.TXUI_InventorySlot_EquipmentBorder'
+    ReferencedTextures[0] = Texture2D'/Game/FactoryGame/Buildable/Vehicle/Vehicle_RadialMenu/Vehicle_Icon_Cancel.Vehicle_Icon_Cancel'
+    ReferencedTextures[1] = Texture2D'/Game/FactoryGame/Interface/UI/Assets/Shared/WindowWidget/RectangleBackground_Rounded.RectangleBackground_Rounded'
+    ReferencedTextures[2] = Texture2D'/Game/FactoryGame/Interface/UI/Assets/Shared/WindowWidget/TXUI_InventorySlot_EquipmentBorder.TXUI_InventorySlot_EquipmentBorder'
 }
 Expressions[0] = {}
 CachedExpressionData =
@@ -15,10 +16,17 @@ CachedExpressionData =
         {
             Entries[0] =
             {
-                ParameterInfos[2] =
+                ParameterInfos[9] =
                 {
-                    ParameterInfos[0] = { Name=Alpha2 }
-                    ParameterInfos[1] = { Name=Alpha1 }
+                    ParameterInfos[0] = { Name=BlinkIcon }
+                    ParameterInfos[1] = { Name=ShowIcon }
+                    ParameterInfos[2] = { Name=IgnoreNineSlice }
+                    ParameterInfos[3] = { Name=SlotSize }
+                    ParameterInfos[4] = { Name=Alpha2 }
+                    ParameterInfos[5] = { Name=SliceMargin }
+                    ParameterInfos[6] = { Name=Alpha1 }
+                    ParameterInfos[7] = { Name=Padding }
+                    ParameterInfos[8] = { Name=InvalidPlacement }
                 }
             }
             Entries[1] =
@@ -32,55 +40,71 @@ CachedExpressionData =
             }
             Entries[2] =
             {
-                ParameterInfos[2] =
+                ParameterInfos[3] =
                 {
                     ParameterInfos[0] = { Name=SlotTexture }
-                    ParameterInfos[1] = { Name=SlotBorder }
+                    ParameterInfos[1] = { Name=SlotIcon }
+                    ParameterInfos[2] = { Name=SlotBorder }
                 }
             }
             Entries[3] = { ParameterInfos[0]={} }
             Entries[4] = { ParameterInfos[0]={} }
         }
-        ScalarValues[2] = { 0, 0 }
+        ScalarValues[9] = { 0, 1, 0, 64, 0, 0.4, 0, 4, 0 }
         VectorValues[3] =
         {
             VectorValues[0] = { R=0.783538, G=0.291771, B=0.057805, A=1 }
             VectorValues[1] = { R=1, G=0, B=0.794904, A=1 }
             VectorValues[2] = { R=0.783538, G=0.291771, B=0.057805, A=1 }
         }
-        TextureValues[2] =
+        TextureValues[3] =
         {
-            TextureValues[0] = Texture2D'/Game/FactoryGame/Interface/UI/Assets/Shared/WindowWidget/Rectangle_Background_Square.Rectangle_Background_Square'
-            TextureValues[1] = Texture2D'/Game/FactoryGame/Interface/UI/Assets/Shared/WindowWidget/TXUI_InventorySlot_EquipmentBorder.TXUI_InventorySlot_EquipmentBorder'
+            TextureValues[0] = Texture2D'/Game/FactoryGame/Interface/UI/Assets/Shared/WindowWidget/RectangleBackground_Rounded.RectangleBackground_Rounded'
+            TextureValues[1] = Texture2D'/Game/FactoryGame/Buildable/Vehicle/Vehicle_RadialMenu/Vehicle_Icon_Cancel.Vehicle_Icon_Cancel'
+            TextureValues[2] = Texture2D'/Game/FactoryGame/Interface/UI/Assets/Shared/WindowWidget/TXUI_InventorySlot_EquipmentBorder.TXUI_InventorySlot_EquipmentBorder'
         }
     }
-    ReferencedTextures[2] =
+    ReferencedTextures[3] =
     {
-        ReferencedTextures[0] = Texture2D'/Game/FactoryGame/Interface/UI/Assets/Shared/WindowWidget/Rectangle_Background_Square.Rectangle_Background_Square'
+        ReferencedTextures[0] = Texture2D'/Game/FactoryGame/Interface/UI/Assets/Shared/WindowWidget/RectangleBackground_Rounded.RectangleBackground_Rounded'
         ReferencedTextures[1] = Texture2D'/Game/FactoryGame/Interface/UI/Assets/Shared/WindowWidget/TXUI_InventorySlot_EquipmentBorder.TXUI_InventorySlot_EquipmentBorder'
+        ReferencedTextures[2] = Texture2D'/Game/FactoryGame/Buildable/Vehicle/Vehicle_RadialMenu/Vehicle_Icon_Cancel.Vehicle_Icon_Cancel'
     }
 }
 BlendMode = BLEND_Translucent (2)
 OpacityMaskClipValue = 0.333
-CollectedTextureParameters[2] =
+CollectedTextureParameters[3] =
 {
     CollectedTextureParameters[0] =
     {
-        Texture = Texture2D'/Game/FactoryGame/Interface/UI/Assets/Shared/WindowWidget/Rectangle_Background_Square.Rectangle_Background_Square'
+        Texture = Texture2D'/Game/FactoryGame/Interface/UI/Assets/Shared/WindowWidget/RectangleBackground_Rounded.RectangleBackground_Rounded'
         Name = SlotTexture
         Group = None
     }
     CollectedTextureParameters[1] =
+    {
+        Texture = Texture2D'/Game/FactoryGame/Buildable/Vehicle/Vehicle_RadialMenu/Vehicle_Icon_Cancel.Vehicle_Icon_Cancel'
+        Name = SlotIcon
+        Group = None
+    }
+    CollectedTextureParameters[2] =
     {
         Texture = Texture2D'/Game/FactoryGame/Interface/UI/Assets/Shared/WindowWidget/TXUI_InventorySlot_EquipmentBorder.TXUI_InventorySlot_EquipmentBorder'
         Name = SlotBorder
         Group = None
     }
 }
-CollectedScalarParameters[2] =
+CollectedScalarParameters[9] =
 {
-    CollectedScalarParameters[0] = { Value=0, Name=Alpha2, Group=None }
-    CollectedScalarParameters[1] = { Value=0, Name=Alpha1, Group=None }
+    CollectedScalarParameters[0] = { Value=0, Name=BlinkIcon, Group=None }
+    CollectedScalarParameters[1] = { Value=1, Name=ShowIcon, Group=None }
+    CollectedScalarParameters[2] = { Value=0, Name=IgnoreNineSlice, Group=None }
+    CollectedScalarParameters[3] = { Value=64, Name=SlotSize, Group=None }
+    CollectedScalarParameters[4] = { Value=0, Name=Alpha2, Group=None }
+    CollectedScalarParameters[5] = { Value=0.4, Name=SliceMargin, Group=None }
+    CollectedScalarParameters[6] = { Value=0, Name=Alpha1, Group=None }
+    CollectedScalarParameters[7] = { Value=4, Name=Padding, Group=None }
+    CollectedScalarParameters[8] = { Value=0, Name=InvalidPlacement, Group=None }
 }
 CollectedVectorParameters[3] =
 {

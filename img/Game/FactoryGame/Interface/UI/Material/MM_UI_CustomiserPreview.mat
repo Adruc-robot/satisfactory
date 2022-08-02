@@ -1,0 +1,6 @@
+Diffuse=TX_Stencils_4096x4096
+Other[0]=IconDesc_FicsitFoundation1m_512
+Other[1]=TXUI_CustomizerColPre_BaseCol
+Other[2]=TXUI_CustomizerColPre_Lit
+Other[3]=TXUI_CustomizerColPre_Mask
+Other[4]=TXUI_PatternPreviewTexCoord

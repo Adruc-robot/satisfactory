@@ -1,2 +1,3 @@
-Diffuse=Rectangle_Background_Square
-Other[0]=TXUI_InventorySlot_EquipmentBorder
+Diffuse=Vehicle_Icon_Cancel
+Other[0]=RectangleBackground_Rounded
+Other[1]=TXUI_InventorySlot_EquipmentBorder

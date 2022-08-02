@@ -1,7 +1,0 @@
-Diffuse=TX_Zipline_01_Albedo
-Normal=TX_Zipline_01_Normal
-Cube=TX_Zipline_01_Reflection
-Other[0]=TX_Railing_01_MaskAO
-Other[1]=T_PowerPoleWall_Reflection
-Other[2]=TX_TrainTrack_BC
-Other[3]=TX_TrainTrack_N
