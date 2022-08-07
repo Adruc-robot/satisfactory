@@ -422,19 +422,23 @@ body {
 .recModalLeft {
   background-color: white;
   grid-area: recModalLeft;
+  display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 .ingTile {
-  
   background-color: white;
-  
   display: flex;
   flex-direction: row;
   align-items: center;
+  width: 100%;
 }
 .recModalLeft .ingTile {
   margin: 5px 0px;
   border-top: 1px solid rgb(204,203,203);
   border-bottom: 1px solid rgb(204,203,203);
+  flex-direction: column;
+  align-items: flex-start;
 }
 .ingTile img {
   height: 64px;
@@ -483,4 +487,45 @@ body {
   vertical-align: super;
   font-size: .8rem;
 }
+.recModalLeft .ingTile {
+  cursor: pointer;
+}
+.expanded {
+  max-height: 666px;
+}
+.collapsed {
+  height: 0;
+  overflow: hidden;
+}
+.ingDataHolder {
+  display: flex;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+}
+.recModalLeft .ingTile > .alts {
+    height: 0;
+    overflow: hidden;
+    -webkit-transition: all .2s ease-in-out;
+    -moz-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+    -ms-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+}
+.recModalLeft .ingTile:target > .alts {
+  /*max-height: 666px;*/
+  height: 100px;
+}
+.alts li {
+  list-style: none;
+}
+.recModalLeft .ingTile {
+  text-decoration: none;
+}
+
+
+
+
+
+
 /*Site Specific Stuff END*/
