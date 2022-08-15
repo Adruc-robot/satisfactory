@@ -1,3 +1,10 @@
+to do:
+1. some kind of drill down to see next level down ingredients
+2. batch file to delete unnecessary files from game files
+3. drop down to load different game versions (currently experimental)
+4. some further css refinements
+
+
 None
 /Game/FactoryGame/Buildable/Building/Catwalk/UI/IconDesc_CatwalkCross_256.IconDesc_CatwalkCross_256
 /Game/FactoryGame/Buildable/Building/Catwalk/UI/IconDesc_CatwalkRamp_256.IconDesc_CatwalkRamp_256

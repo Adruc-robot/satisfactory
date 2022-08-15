@@ -4,14 +4,14 @@ const thePath = 'txt/Docs.JSON'
 let reciSort = []
 let descArr = []
 //testing
-const dig = (obj, target) =>
+/*const dig = (obj, target) =>
 target in obj
   ? obj[target]
   : Object.values(obj).reduce((acc, val) => {
     //console.log(acc)
       if (acc !== undefined) return acc;
       if (typeof val === 'object') return dig(val, target);
-    }, undefined);
+    }, undefined);*/
 let doot = {}
 let domReady = function(callback) {
     document.readyState === "interactive" || document.readyState === "complete" ? callback() : document.addEventListener("DOMContentLoaded", callback);
@@ -22,13 +22,9 @@ domReady(function() {
     
 
 })
-let newThing = []
-let mainArr = []
 
 async function main() {
     doot = await getThings(thePath)
-
-    //let descArr = []
     for (let xx = 0; xx < doot.length; xx++) {
         for (let yy = 0; yy < doot[xx].Classes.length; yy++) {
             if (doot[xx].Classes[yy].ClassName.includes('Desc_') || doot[xx].Classes[yy].ClassName.includes('BP_') || doot[xx].Classes[yy].ClassName.includes('Foundation_') || doot[xx].Classes[yy].ClassName.includes('Build_')) {
@@ -39,21 +35,6 @@ async function main() {
             }
         }
     }
-    /*let picPathArr = []
-    for (let xx = 0; xx < doot.length; xx++) {
-        for (let yy = 0; yy < doot[xx].Classes.length; yy++) {
-            if (picPathArr.length > 0) {
-                if (picPathArr.filter(a => {
-                    return a === doot[xx].Classes[yy].mSmallIcon
-                }).length === 0) {
-                    picPathArr.push(doot[xx].Classes[yy].mSmallIcon)
-                }
-            } else {
-                picPathArr.push(doot[xx].Classes[yy].mSmallIcon)
-            }
-        }
-    }
-    picPathArr.sort().forEach(a => console.log(a))*/
     let reciArr = []
     for (let xx = 0; xx < doot.length; xx++) {
         for (let yy = 0; yy < doot[xx].Classes.length; yy++) {
@@ -65,7 +46,6 @@ async function main() {
             }
         }
     }
-
     reciArr.forEach(item => {
         if (item.reciData.mIngredients) {
             item.ings = []
@@ -580,6 +560,7 @@ function itemRemove(itemName) {
 
 function tallyIngredients() {
     let materialList = []
+    let testList = []
     document.querySelectorAll('.toDoList .addedItem').forEach(item => {
         //const itemName = item.querySelector('.aiName').innerText
         //console.log(item)
@@ -590,11 +571,11 @@ function tallyIngredients() {
             }
         })
 
-        
+        //let testList = []
         const itemAmount = Number(item.querySelector('.aiAmount').innerText)
         //let itemOfInterest = reciSort.filter(item => {return item.DisplayName == itemName})
         itemOfInterest = reciSort.filter(item => {return item.reciData.ClassName === rName})
-        console.log(itemOfInterest)
+        //console.log(itemOfInterest)
         itemOfInterest[0].mIngredients.split('.').forEach(ing => {
             //console.log(ing)
             if (ing.includes('"\',Amount=')) {
@@ -604,7 +585,7 @@ function tallyIngredients() {
                 //console.log(cNOI)
                 let foundItem = reciSort.filter(item => { 
                     if (item.descData) {
-                        if (item.descData.ClassName == cNOI) {
+                        if (item.descData.ClassName == cNOI && !(item.DisplayName.includes('Alternate:'))) {
                             return item
                         }
                     }
@@ -612,27 +593,46 @@ function tallyIngredients() {
                 //console.log(foundItem)
                 let ingName = ''
                 //filter out the alternates for now
-
+                let theIndex = 0
                 if (foundItem.length > 0) {
-                    if (foundItem.length > 1) {
+                    for (let vv = 0; vv < testList.length; vv++) {
+                        if (testList[vv].ingName === foundItem[0].DisplayName) {
+                            theIndex = vv
+                            vv = testList.length + 1
+                        }
+                    }
+                    if (theIndex === 0) {
+                    //if (!testList[cNOI]) {
+                        //need a new object
+                        let newObj = {}
+                        newObj.ingName = foundItem[0].DisplayName
+                        newObj.ingAmount = ingAmount * itemAmount
+                        newObj.ClassName = cNOI
+                        testList.push(newObj) 
+                    } else {
+                        //update the object
+                        testList[theIndex].ingAmount = testList[theIndex].ingAmount + (ingAmount * itemAmount)
+                    }
+                    ingName = foundItem[0].DisplayName
+                    /*if (foundItem.length > 1) {
 
                         let newFI = foundItem.filter(item => { return !(item.DisplayName.includes('Alternate:'))})
                         ingName = newFI[0].DisplayName
                     } else {
                         ingName = foundItem[0].DisplayName
-                    }
+                    }*/
                     if (!materialList[ingName]) {
                         materialList[ingName] = ingAmount * itemAmount
                     } else {
                         materialList[ingName] = materialList[ingName] + (ingAmount * itemAmount)
                     }
+                    //console.log(testList)
                 } else {
                     console.log(`no recipe found for ${cNOI}`)
                 }
             }
         })
     })
-    //console.log(materialList)
     let matSort = Object.keys(materialList).sort(function(a,b) {
         if (a > b) {
             return 1
@@ -642,39 +642,39 @@ function tallyIngredients() {
         }
         return 0
     })
+    //let testSort = Object.keys(testList).sort(function(a,b) {
+    let testSort = testList.sort(function(a,b) {
+        if (a.ingName > b.ingName) {
+            return 1
+        }
+        if (a.ingName < b.ingName) {
+            return -1
+        }
+        /*if (a > b) {
+            return 1
+        }
+        if (a < b) {
+            return -1
+        }*/
+        return 0
+    })
     //console.log(matSort)
+    //console.log(testList)
+    console.log(testSort)
     document.querySelector('.ingTotals').innerHTML = ''
-    matSort.forEach(item => {
-        //console.log(item)
+    testSort.forEach(item => {
         let matHolder = document.createElement('div')
-        matHolder.classList.add('gFlex')
+        matHolder.classList.add('gFlex',item.ClassName)
         let neededMat = document.createElement('div')
         neededMat.classList.add('neededMat')
-        //console.log(newThing)
-        //console.log(item)
-        //if (newThing[item.replace(' ','').replace('.','').replace('™','')].DisplayName) {
-            //neededMat.innerText = newThing[item.replace(' ','').replace('.','').replace('™','')].DisplayName
-        //} else {
-            neededMat.innerText = item
-        //}
+        neededMat.innerText = item.ingName
         let neededAmount = document.createElement('div')
         neededAmount.classList.add('neededAmount')
-        neededAmount.innerText = materialList[item]
+        neededAmount.innerText = item.ingAmount
         matHolder.appendChild(neededMat)
         matHolder.appendChild(neededAmount)
         document.querySelector('.ingTotals').appendChild(matHolder)
-        
     })
-    /*this here will work
-    let totalString = ''
-    for (let key in materialList) {
-        console.log(`${key}: ${materialList[key]}`)
-        if (doot[key][0].ingredients) {
-            console.log(doot[key][0].ingredients)
-        }
-        totalString = totalString + `<div class="gFlex"><div class="neededMat">${key}</div><div class="neededAmount">${materialList[key]}</div></div>`
-    }*/
-    //document.querySelectorAll('.ingTotals')[0].innerHTML = totalString
 }
 
 
@@ -718,9 +718,6 @@ function itemClicked(elem) {
             break
     }
     incEl.innerText = newValue
-    //console.log(doot[this.closest('.item').querySelectorAll('.itemName')[0].innerText][0].ingredients)
-    //if (document.querySelectorAll(`.toDoList[data-addedIng="${doot[this.closest('item').querySelectorAll('.itemName')[0]}"`).length == 0) {
-    //console.log(this.closest('.item').querySelectorAll('itemName')[0].innerText)
     document.querySelectorAll('.toDoList .addedItem .aiName').forEach(item => {
         if (item.innerText == elem.closest('.item').querySelectorAll('.itemName')[0].innerText ) {
             itemAdded = true
@@ -734,7 +731,6 @@ function itemClicked(elem) {
                 rName = a
             }
         })
-        //console.log(elem.closest('.item').querySelector('.itemName').innerText)
         addItem(elem.closest('.item').querySelector('.itemName').innerText,newValue,rName)
     }
     if (removeItem) {

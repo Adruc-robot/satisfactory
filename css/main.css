@@ -519,9 +519,15 @@ body {
 .alts li {
   list-style: none;
 }
-.recModalLeft .ingTile {
+
+/*.recModalLeft .ingTile > div {
   text-decoration: none;
+}*/
+.ingAName, .perSecond, .alts > li {
+  text-decoration: none;
+  color: black;
 }
+
 
 
 
