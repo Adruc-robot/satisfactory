@@ -1,3 +1,4 @@
+let techTier = []
 let multProd = []
 let hoverObject = ''
 const thePath = 'txt/Docs.JSON'
@@ -22,7 +23,6 @@ domReady(function() {
     
 
 })
-
 async function main() {
     doot = await getThings(thePath)
     for (let xx = 0; xx < doot.length; xx++) {
@@ -35,6 +35,10 @@ async function main() {
             }
         }
     }
+    let uniString = '|'
+    let mTechTier = '|'
+    
+    let mType = '|'
     let reciArr = []
     for (let xx = 0; xx < doot.length; xx++) {
         for (let yy = 0; yy < doot[xx].Classes.length; yy++) {
@@ -44,8 +48,83 @@ async function main() {
                 sObj.reciData = item
                 reciArr.push(sObj)
             }
+            //if (doot[xx].Classes[yy].mTechTier) {
+
+                //if (!techTier[doot[xx].Classes[yy].mTechTier]) {
+                    //techTier[doot[xx].Classes[yy].mTechTier][0] = doot[xx].Classes[yy]
+                //} else {
+                    //techTier[doot[xx].Classes[yy].mTechTier].push(doot[xx].Classes[yy])
+                //}
+            //}
+            //console.log(doot[xx].Classes[yy].Tier)
+            if (doot[xx].Classes[yy].mTechTier) {
+
+                if (!techTier[doot[xx].Classes[yy].mTechTier]) {
+                    techTier[doot[xx].Classes[yy].mTechTier] = []
+                }
+                let iObj = {}
+                iObj.DisplayName = `${doot[xx].Classes[yy].mTechTier}: ${doot[xx].Classes[yy].mDisplayName}`
+                iObj.fullData = doot[xx].Classes[yy]
+                let ings = []
+                if (doot[xx].Classes[yy].mCost) {
+
+                    doot[xx].Classes[yy].mCost.split('),(').forEach(thing => {
+                    //doot[xx].Classes[yy].mCost.forEach(thing => {
+                        let ingObj = {}
+                        ingObj.itemName = thing.split('"\',Amount=')[0].split('.')[1]
+                        ingObj.amount = thing.split('"\',Amount=')[1].replace('))','')
+                        ings.push(ingObj)
+                    })
+                    iObj.ings = ings
+                    //techTier[doot[xx].Classes[yy].mTechTier].push(doot[xx].Classes[yy])
+                    techTier[doot[xx].Classes[yy].mTechTier].push(iObj)
+                }
+            }
+            //var keys = Object.keys(doot[xx].Classes[yy])
+            //keys.forEach(function(key) {
+                //if (!mTechTier.includes(`|${doot[xx].Classes[yy].mTechTier}|`)) {
+                    //console.log(doot[xx].Classes[yy].mTechTier)
+                    //mTechTier = mTechTier + doot[xx].Classes[yy].mTechTier + '|'
+                //}
+                //console.log(key + ": " + doot[xx].Classes[yy][key])
+                //console.log(key)
+                /*if (!uniString.includes(`|${key}|`)) {
+                    console.log(key)
+                    uniString = uniString + key + '|'
+                }*/
+                //if (!mType.includes(`|${doot[xx].Classes[yy].mType}`)) {
+                    //console.log(doot[xx].Classes[yy].mType)
+                    //mType = mType + doot[xx].Classes[yy].mType + '|'
+                //}
+            //})
         }
     }
+    //add a null entry instead of starting at 0
+    let dropdown = document.createElement('select')
+    dropdown.classList.add('tier')
+    for (let pst = 0; pst < techTier.length; pst++) {
+        let option = document.createElement('option')
+        option.text = `Tier ${pst}`
+        option.value = pst    
+        dropdown.appendChild(option)
+    }
+    document.querySelector('.filters').appendChild(dropdown)
+    //console.log(techTier)
+    /*techTier.forEach(item => {
+        item.forEach(thing => {
+            if (thing.mType === 'EST_Milestone') {
+                console.log(`Tier: ${thing.mTechTier} - ${thing.mDisplayName}`)
+                let recs = thing.mCost.split('),(')
+                recs.forEach(ing => {
+                    let tt = ing.split('"\',Amount=')
+                    //the cost for each milestone tier
+                    console.log(`${tt[0].split('.')[1]}: ${tt[1].replace('))','')}`)
+                    
+                })
+            }
+        })
+    })*/
+    //console.log(techTier)
     reciArr.forEach(item => {
         if (item.reciData.mIngredients) {
             item.ings = []
@@ -214,7 +293,12 @@ async function main() {
             document.querySelector('.LeftSide').appendChild(itemHolder)
         }
     })
-
+    document.addEventListener('change', e => {
+        if (e.target.classList.contains('tier')) {
+            //console.log(e.target.value)
+            tierChange(e.target.value)
+        }
+    })
     document.addEventListener('click', e => {
         if (!document.querySelector('.modalHolder').contains(e.target)) {
             document.querySelector('.modalHolder').innerHTML = ''
@@ -245,7 +329,42 @@ async function main() {
             }
         })
     })
-    //console.log(reciSort)
+}
+function tierChange(tier) {
+    console.log(tier)
+    //-1
+    document.querySelectorAll('.tierToggle').forEach(item => {
+        //item.removeEventListener('')
+    })
+    //1
+    if (document.querySelector('.tierToggleHolder')) {
+        let holder = document.querySelector('.tierToggleHolder')
+        holder.parentNode.removeChild(holder)
+    }
+    //2 create a holder
+    let holder = document.createElement('div')
+    holder.classList.add('tierToggleHolder')
+    console.log(document.querySelector('.filters'))
+    document.querySelector('.filters').appendChild(holder)
+    //3 get the selected tier
+    techTier[tier].forEach(item => {
+        //console.log(item)
+        //console.log(item.)
+        if (item.fullData.mType === 'EST_Milestone') {
+            //console.log(item)
+            let rHolder = document.createElement('div')
+            let rHolderTitle = document.createElement('span')
+            rHolderTitle.innerText = item.DisplayName
+            rHolder.appendChild(rHolderTitle)
+            holder.appendChild(rHolder)
+            //console.log(item.DisplayName)
+        }
+    })
+
+    //-1. remove existing event triggers?
+    //1. set inner html of existing thingy to ''
+    //2. loop through selected tiers and provide some kind of interactivity for each description - buttons? checkboxs?
+    //3. assi?
 }
 function fullReport(el) {
     console.log(el)
