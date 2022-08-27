@@ -23,10 +23,14 @@ domReady(function() {
     
 
 })
+
 async function main() {
     doot = await getThings(thePath)
     for (let xx = 0; xx < doot.length; xx++) {
         for (let yy = 0; yy < doot[xx].Classes.length; yy++) {
+            //if (doot[xx].Classes[yy].ClassName.toLowerCase().includes('coupon')) {
+                //console.log(doot[xx].Classes[yy])
+            //}
             if (doot[xx].Classes[yy].ClassName.includes('Desc_') || doot[xx].Classes[yy].ClassName.includes('BP_') || doot[xx].Classes[yy].ClassName.includes('Foundation_') || doot[xx].Classes[yy].ClassName.includes('Build_')) {
                 let item = doot[xx].Classes[yy]
                 let sObj = {}
@@ -63,7 +67,8 @@ async function main() {
                     techTier[doot[xx].Classes[yy].mTechTier] = []
                 }
                 let iObj = {}
-                iObj.DisplayName = `${doot[xx].Classes[yy].mTechTier}: ${doot[xx].Classes[yy].mDisplayName}`
+                //iObj.DisplayName = `${doot[xx].Classes[yy].mTechTier}: ${doot[xx].Classes[yy].mDisplayName}`
+                iObj.DisplayName = doot[xx].Classes[yy].mDisplayName
                 iObj.fullData = doot[xx].Classes[yy]
                 let ings = []
                 if (doot[xx].Classes[yy].mCost) {
@@ -71,12 +76,93 @@ async function main() {
                     doot[xx].Classes[yy].mCost.split('),(').forEach(thing => {
                     //doot[xx].Classes[yy].mCost.forEach(thing => {
                         let ingObj = {}
-                        ingObj.itemName = thing.split('"\',Amount=')[0].split('.')[1]
+                        let classLink = thing.split('"\',Amount=')[0].split('.')[1]
+                        ingObj.classLink = classLink
                         ingObj.amount = thing.split('"\',Amount=')[1].replace('))','')
                         ings.push(ingObj)
                     })
                     iObj.ings = ings
-                    //techTier[doot[xx].Classes[yy].mTechTier].push(doot[xx].Classes[yy])
+                }
+                let rewObj = {}
+                if (doot[xx].Classes[yy].mUnlocks.length > 0) {
+                    
+                    doot[xx].Classes[yy].mUnlocks.forEach(unlock => {
+                        let rews = []
+                        //there are multiple kinds of unlocks up in here - gonna focus on the recipes for now. rewards should probably be an object with all the things for ultimate flexibility...
+                        //console.log(unlock)
+                        if (unlock.mRecipes) {
+                            let recArr = []
+                            //console.log(unlock.mRecipes)
+                            unlock.mRecipes.split('"\'').forEach(reward => {
+                                if (reward.split('.')[1]) {
+                                    //console.log(reward.split('.')[1])
+                                    recArr.push({"classLink": reward.split('.')[1]})
+                                }
+                            })
+                            rewObj.recipes = recArr
+                        }
+                        if (unlock.mNumInventorySlotsToUnlock) {
+                            rewObj.additionalInventorySlots = unlock.mNumInventorySlotsToUnlock
+                        }
+                        if (unlock.mResourcesToAddToScanner) {
+                            let recArr = []
+
+                            unlock.mResourcesToAddToScanner.split('"\',').forEach(item => {
+                                if (item.split('.')[1]) {
+                                    recArr.push(item.split('.')[1].replace('"\')',''))
+                                }
+                            })
+                            rewObj.newScannerResources = recArr
+                        }
+                        if (unlock.mResourcePairsToAddToScanner) {
+                            let recArr = []
+                            //console.log(unlock.mResourcePairsToAddToScanner)
+                            unlock.mResourcePairsToAddToScanner.split('),(').forEach(item => {
+                                //console.log(item.split('"\'')[0].split('.')[1])
+                                recArr.push(item.split('"\'')[0].split('.')[1])
+                            })
+                            rewObj.newScannerResourcePairs = recArr
+                        }
+                        if (unlock.mEmotes) {
+                            let recArr = []
+                            //console.log(unlock.mEmotes)
+                            unlock.mEmotes.split('"\'').forEach(item => {
+                                //console.log(item)
+                                if (item.split('.')[1]) {
+                                    //console.log(item.split('.')[1])
+                                    recArr.push(item.split('.')[1])
+                                }
+                            })
+                            rewObj.Emotes = recArr
+                        }
+                        if (unlock.mSchematics) {
+                            let recArr = []
+                            //console.log(unlock.mSchematics)
+                            unlock.mSchematics.split('"\'').forEach(item => {
+                                //console.log(item)
+                                //console.log(item.split('.'))
+                                if (item.split('.')[1]) {
+                                    //console.log(item.split('.')[1])
+                                    recArr.push(item.split('.')[1])
+                                }
+                            })
+                            rewObj.schematics = recArr
+                        }
+                        if (unlock.mNumArmEquipmentSlotsToUnlock) {
+                            //console.log(unlock.mNumArmEquipmentSlotsToUnlock)
+                            //additionalInventorySlots
+                            rewObj.additionalArmSlots = unlock.mNumArmEquipmentSlotsToUnlock
+                        }
+                        if (unlock.mItemsToGive) {
+                            let recObj = {}
+                            let sT = unlock.mItemsToGive.split('"\',Amount=')
+                            recObj.itemName = sT[0].split('.')[1]
+                            recObj.amount = sT[1].replace('))','')
+                            rewObj.resourceSinkItems = recObj
+                        }
+
+                        iObj.rewards = rewObj
+                    })
                     techTier[doot[xx].Classes[yy].mTechTier].push(iObj)
                 }
             }
@@ -293,6 +379,91 @@ async function main() {
             document.querySelector('.LeftSide').appendChild(itemHolder)
         }
     })
+    
+    //console.log(reciArr)
+    techTier.forEach(items => {
+        //console.log(items)
+        items.forEach(item => {
+            //console.log(item)
+            if (item.ings) {
+                item.ings.forEach(ing => {
+                    //console.log(ing)
+                    let findThing = reciArr.filter(a => {
+                        if (a.descData) {
+                            return a.descData.ClassName === ing.classLink
+                        } 
+                    })
+                    //console.log(descArr)
+                    let newThing = []
+                    switch (findThing.length) {
+                        case 0:
+                            //fall back on descArr
+                            newThing = descArr.filter(a => {
+                                return a.descData.ClassName === ing.classLink
+                            })
+                            switch (newThing.length) {
+                                case 0:
+                                    switch (ing.classLink) {
+                                        case 'Desc_HardDrive_C':
+                                            ing.itemName = 'Hard Drive'
+                                            ing.imgLink = 'img/Game/FactoryGame/Resource/Environment/CrashSites/UI/HardDrive_64.png'
+                                            break
+                                        case 'Desc_ResourceSinkCoupon_C':
+                                            ing.itemName = 'FICSIT Coupon'
+                                            ing.imgLink = 'img/None.png'
+                                            break
+                                        default:
+                                            console.log(ing.classLink)
+                                            break
+                                    }
+
+                                    //console.log(ing.classLink)
+                                    break
+                                case 1:
+                                    if (!newThing[0].descData.mDisplayName || !newThing[0].descData.mSmallIcon) {
+                                        //so far, no issues
+                                        console.log(newThing[0])
+                                    } else {
+                                        ing.itemName = newThing[0].descData.mDisplayName
+                                        ing.imgLink = `img/${newThing[0].descData.mSmallIcon.substring(newThing[0].descData.mSmallIcon.indexOf('/') + 1, newThing[0].descData.mSmallIcon.length).split('.')[0]}.png`
+                                    }
+                                    break
+                                default:
+                                    console.log('filter thingy has more objects than expected - potentially filter by "alternate" on ClassName"')
+                                    break
+                            }
+                            break
+                        case 1:
+                            ing.itemName = findThing[0].DisplayName
+                            ing.imgLink = findThing[0].imgLink
+                            break
+                        default:
+                            //filter out the alternates
+                            newThing = findThing.filter(a => {
+                                return !a.DisplayName.includes('Alternate')
+                            })
+                            ing.itemName = newThing[0].DisplayName
+                            ing.imgLink = newThing[0].imgLink
+                    }
+                    /*if (findThing.length === 0) {
+                        console.log(ing)
+                    }*/
+                })
+            }
+            if (item.rewards.recipes) {
+                //console.log(item.rewards.recipes)
+                item.rewards.recipes.forEach(rec => {
+                    //console.log(rec.classLink)
+                    let foundItem = reciArr.filter(a => {
+                        return a.reciData.ClassName === rec.classLink
+                    })
+                    rec.itemName = foundItem[0].DisplayName
+                    rec.imgLink = foundItem[0].imgLink
+                })
+            }
+        })
+    })
+
     document.addEventListener('change', e => {
         if (e.target.classList.contains('tier')) {
             //console.log(e.target.value)
@@ -317,6 +488,11 @@ async function main() {
             fullReport(e.target.closest('.addedItem'))
         }
         //console.log(e.target)
+        if (e.target.classList.contains('tierItem')) {
+            clickedTierItem(e.target.innerText)
+            //console.log(e.target)
+        }
+        //console.log(e.target)
     })
     document.querySelector('#nameFilter').addEventListener('keyup', e=> {
         document.querySelectorAll('.item').forEach(item => {
@@ -329,13 +505,14 @@ async function main() {
             }
         })
     })
+    //console.log(techTier)
 }
 function tierChange(tier) {
-    console.log(tier)
+    //console.log(tier)
     //-1
-    document.querySelectorAll('.tierToggle').forEach(item => {
+    //document.querySelectorAll('.tierToggle').forEach(item => {
         //item.removeEventListener('')
-    })
+    //})
     //1
     if (document.querySelector('.tierToggleHolder')) {
         let holder = document.querySelector('.tierToggleHolder')
@@ -344,27 +521,180 @@ function tierChange(tier) {
     //2 create a holder
     let holder = document.createElement('div')
     holder.classList.add('tierToggleHolder')
-    console.log(document.querySelector('.filters'))
+    //console.log(document.querySelector('.filters'))
     document.querySelector('.filters').appendChild(holder)
-    //3 get the selected tier
+    //3 get the selected tier and add in the data
     techTier[tier].forEach(item => {
         //console.log(item)
         //console.log(item.)
         if (item.fullData.mType === 'EST_Milestone') {
             //console.log(item)
             let rHolder = document.createElement('div')
+            //rHolder.classList.add('tierItem')
             let rHolderTitle = document.createElement('span')
+            rHolderTitle.classList.add('tierItem')
             rHolderTitle.innerText = item.DisplayName
             rHolder.appendChild(rHolderTitle)
             holder.appendChild(rHolder)
             //console.log(item.DisplayName)
         }
     })
-
+    //4 set up event triggers
+    //document.querySelectorAll('.tierItem').forEach(item => {
+    //    item.addEventListener('click',)
+    //})
     //-1. remove existing event triggers?
     //1. set inner html of existing thingy to ''
     //2. loop through selected tiers and provide some kind of interactivity for each description - buttons? checkboxs?
     //3. assi?
+}
+function clickedTierItem(tierTitle) {
+    console.log(tierTitle)
+    let sI = techTier[document.querySelector('.tier').value].filter(item => {
+        return item.DisplayName === tierTitle
+    })
+    //console.log('rewards:')
+    //console.log(sI[0].rewards)
+    //console.log('cost:')
+    //console.log(sI[0].ings)
+    //console.log(sI)
+    if (document.querySelector('.recModal')) {
+        document.querySelector('.recModal').parentNode.removeChild(document.querySelector('.recModal'))
+    }
+    let recModal = document.createElement('div')
+    recModal.classList.add('recModal')
+    let recModalTitleHolder = document.createElement('div')
+    recModalTitleHolder.classList.add('recModalTitleHolder')
+    let recModalHead = document.createElement('div')
+    recModalHead.classList.add('recModalHead')
+    console.log(sI[0])
+    //recModalHead.innerText = 'Tier View:'
+    recModalHead.innerText = `Tier ${sI[0].fullData.mTechTier}:`
+    recModalTitleHolder.appendChild(recModalHead)
+    let recModalTitle = document.createElement('div')
+    recModalTitle.classList.add('recModalTitle')
+    recModalTitle.innerText = sI[0].DisplayName
+    recModalTitleHolder.appendChild(recModalTitle)
+    recModal.appendChild(recModalTitleHolder)
+    
+    let recModalMid = document.createElement('div')
+    //this is going to hold info tbd
+    recModalMid.classList.add('recModalMid')
+    let recModalData = document.createElement('div')
+    recModalData.appendChild(recModalMid)
+    let recModalLeft = document.createElement('div')
+    recModalLeft.classList.add('recModalLeft')
+    //holds the ingredients and amounts
+    
+    recModalData.classList.add('recModalData')
+    recModal.appendChild(recModalData)
+    
+    recModalData.appendChild(recModalLeft)
+    let recModalLeftTitle = document.createElement('div')
+    recModalLeftTitle.classList.add('recModalLeftTitle')
+    let recModalLeftTitleHolder = document.createElement('span')
+    recModalLeftTitleHolder.innerText = 'Cost:'
+    recModalLeftTitle.appendChild(recModalLeftTitleHolder)
+    recModalLeft.appendChild(recModalLeftTitle)
+    let cost = document.createElement('div')
+    cost.classList.add('cost')
+    let tCount = 1
+    sI[0].ings.forEach(ing => {
+        let ingTile = document.createElement('a')
+        ingTile.classList.add('ingTile',ing.classLink, 'viewIng')
+        ingTile.href = `#ing${tCount}`
+        ingTile.id = `ing${tCount}`
+        tCount++
+        let ingDataHolder = document.createElement('div')
+        ingDataHolder.classList.add('ingDataHolder')
+        let ingPic = document.createElement('img')
+        ingPic.src = ing.imgLink
+        ingPic.classList.add('viewIng')
+        let ingStats = document.createElement('div')
+        ingStats.classList.add('ingStats','viewIng')
+        let ingAName = document.createElement('div')
+        ingAName.classList.add('ingAName','viewIng')
+        ingAName.innerHTML = `${ing.amount} ${ing.itemName}`
+        /*let ingPerSec = document.createElement('div')
+        ingPerSec.classList.add('perSecond')
+        ingPerSec.innerHTML = `(${(item.singAm / pDur) * 60} / minute)`*/
+        //testing for accordion
+        //let alts = document.createElement('ul')
+        //alts.id = `ing${tCount}`
+        //tCount++
+        /*alts.classList.add('alts')
+        let altMat = reciSort.filter(a => {
+            if (a.descData) {
+                return a.descData.ClassName === ing.classLink
+            }
+        }).sort(function(a,b) {
+            if (a.DisplayName > b.DisplayName) {
+                return 1    
+            }
+            if (a.DisplayName < b.DisplayName) {
+                return -1
+            }
+        })
+        altMat.forEach(tt => {
+            let teps = reciSort.filter(z => { return z.DisplayName === tt.DisplayName})
+            //console.log(teps[0])
+            //console.log(tt)
+            /*mFDur = tt.reciData.mManufactoringDuration.split('.')[0]
+            mFAmount = (tt.prods.filter(z => { return z.ClassName === tt.descData.ClassName})[0].singAm / mFDur) * 60*/
+            //console.log(mFAmount)
+            //let producer = teps[0].ProducedIn.split('/Game/FactoryGame/')[1].split('.')[1].replace(')','').replace(',','')
+            //let equip = descArr.filter(z => { return z.descData.ClassName === producer})
+            //console.log(producer)
+            //console.log(equip)*/
+            /*let newLI = document.createElement('li')
+            newLI.innerText = `${tt.DisplayName} (${mFAmount} / minute)`
+            alts.appendChild(newLI)
+        })*/
+        //console.log(altMat)
+        //onsole.log(altMat)
+
+        ingDataHolder.appendChild(ingPic)
+        ingDataHolder.appendChild(ingAName) 
+        //ingDataHolder.appendChild(ingPerSec)
+        ingTile.appendChild(ingDataHolder)
+        /*ingTile.appendChild(alts)*/
+        recModalLeft.appendChild(ingTile)
+        
+        /*let whatIs = descArr.descData.filter(a => {
+            return a.ClassName === ing.DisplayName
+        })*/
+        //console.log(whatIs)
+    })
+    //console.log(sI[0])
+    let recModalRight = document.createElement('div')
+    recModalRight.classList.add('recModalRight')
+    let recModalRightTitleHolder = document.createElement('div')
+    recModalRightTitleHolder.classList.add('recModalRightTitleHolder')
+    let recModalRightTitle = document.createElement('span')
+    recModalRightTitle.classList.add('recRightModalTitle')
+    recModalRightTitle.innerText = 'Rewards:'
+    recModalRightTitleHolder.appendChild(recModalRightTitle)
+    recModalRight.appendChild(recModalRightTitleHolder)
+    recModalData.appendChild(recModalRight)
+    sI[0].rewards.recipes.forEach(ing => {
+        let ingTile = document.createElement('div')
+        ingTile.classList.add('ingTile',ing.classLink, 'viewIng')
+        let ingDataHolder = document.createElement('div')
+        ingDataHolder.classList.add('ingDataHolder')
+        let ingPic = document.createElement('img')
+        ingPic.src = ing.imgLink
+        ingPic.classList.add('viewIng')
+        let ingStats = document.createElement('div')
+        ingStats.classList.add('ingStats','viewIng')
+        let ingAName = document.createElement('div')
+        ingAName.classList.add('ingAName','viewIng')
+        ingAName.innerHTML = ing.itemName
+        ingDataHolder.appendChild(ingPic)
+        ingDataHolder.appendChild(ingAName)
+        ingTile.appendChild(ingDataHolder)
+        recModalRight.appendChild(ingTile)
+    })
+    document.querySelector('.modalHolder').appendChild(recModal)
 }
 function fullReport(el) {
     console.log(el)

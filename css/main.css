@@ -456,13 +456,14 @@ body {
 }
 .recModalRight {
   grid-area: recModalRight;
+  background-color: white;
 }
 .recModalMid {
   grid-area: recModalMid;
 }
-.recModalRight .ingTile {
-  /*height: 100%;*/
-}
+/*.recModalRight .ingTile {
+  height: 100%;
+}*/
 .recModalRight, .recModalLeft {
   border: 10px solid rgb(50,50,50);
   border-radius: 5px;
@@ -527,7 +528,10 @@ body {
   text-decoration: none;
   color: black;
 }
-
+.tierToggleHolder {
+  display: flex;
+  justify-content: space-around;
+}
 
 
 
