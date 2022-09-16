@@ -1,3 +1,4 @@
+var busyEditing = false
 let techTier = []
 let multProd = []
 let hoverObject = ''
@@ -472,25 +473,43 @@ async function main() {
     })
     document.addEventListener('click', e => {
         if (!document.querySelector('.modalHolder').contains(e.target)) {
-            document.querySelector('.modalHolder').innerHTML = ''
+            if (!busyEditing) {
+                document.querySelector('.modalHolder').innerHTML = ''
+            }
         }
         if (e.target.classList.contains('plus') || e.target.classList.contains('minus')) {
-            itemClicked(e.target)
+            if (!busyEditing) {
+                itemClicked(e.target)
+            }
         }
         if (e.target.classList.contains('viewRecip')) {
-            viewRecip(e.target.parentElement)
+            if (!busyEditing) {
+                viewRecip(e.target.parentElement)
+            }
         }
         if (e.target.classList.contains('viewIng')) {
-            viewIng(e.target)
+            if (!busyEditing) {
+                viewIng(e.target)
+            }
         }
         if (e.target.classList.contains('fullReport')) {
-            //console.log(e.target)
-            fullReport(e.target.closest('.addedItem'))
+            if (!busyEditing) {
+                fullReport(e.target.closest('.addedItem'))
+            }
         }
-        //console.log(e.target)
+
         if (e.target.classList.contains('tierItem')) {
-            clickedTierItem(e.target.innerText)
-            //console.log(e.target)
+            if (!busyEditing) {
+                clickedTierItem(e.target.innerText)
+            }
+        }
+        if (e.target.classList.contains('editButton')) {
+            editToDoList()
+        }
+        if (e.target.classList.contains('clearButton')) {
+            if (!busyEditing) {
+                clearToDoList()
+            }
         }
         //console.log(e.target)
     })
@@ -1021,7 +1040,15 @@ function tallyIngredients() {
         })
 
         //let testList = []
-        const itemAmount = Number(item.querySelector('.aiAmount').innerText)
+        //const itemAmount = Number(item.querySelector('.aiAmount').innerText)
+        let itemAmount
+        if (busyEditing) {
+            //need to get how many from the input
+            itemAmount = item.querySelector('.editingNum').value
+        } else {
+            //need to get how many from innerText
+            itemAmount = Number(item.querySelector('.aiAmount').innerText)
+        }
         //let itemOfInterest = reciSort.filter(item => {return item.DisplayName == itemName})
         itemOfInterest = reciSort.filter(item => {return item.reciData.ClassName === rName})
         //console.log(itemOfInterest)
@@ -1107,11 +1134,9 @@ function tallyIngredients() {
         }*/
         return 0
     })
-    //console.log(matSort)
-    //console.log(testList)
-    console.log(testSort)
+      
     document.querySelector('.ingTotals').innerHTML = ''
-    testSort.forEach(item => {
+    /*testSort.forEach(item => {
         let matHolder = document.createElement('div')
         matHolder.classList.add('gFlex',item.ClassName)
         let neededMat = document.createElement('div')
@@ -1123,7 +1148,27 @@ function tallyIngredients() {
         matHolder.appendChild(neededMat)
         matHolder.appendChild(neededAmount)
         document.querySelector('.ingTotals').appendChild(matHolder)
-    })
+    })*/
+    if (testSort.length > 0) {
+        testSort.forEach(item => {
+            let matHolder = document.createElement('div')
+            matHolder.classList.add('gFlex',item.ClassName)
+            let neededMat = document.createElement('div')
+            neededMat.classList.add('neededMat')
+            neededMat.innerText = item.ingName
+            let neededAmount = document.createElement('div')
+            neededAmount.classList.add('neededAmount')
+            neededAmount.innerText = item.ingAmount
+            matHolder.appendChild(neededMat)
+            matHolder.appendChild(neededAmount)
+            document.querySelector('.ingTotals').appendChild(matHolder)
+        })
+        if (!document.querySelector('.listFunctions')) {
+            setUpTDFunctions()
+        }
+    } else {
+        removeListFunctions()
+    }
 }
 
 
@@ -1196,3 +1241,94 @@ function itemClicked(elem) {
     })
 
 }*/
+function removeListFunctions() {
+    document.querySelector('.listFunctions').parentNode.removeChild(document.querySelector('.listFunctions'))
+}
+function setUpTDFunctions() {
+    let lF = document.createElement('div')
+    lF.classList.add('listFunctions','gFlex')
+    let eB = document.createElement('span')
+    eB.classList.add('editButton','clicker')
+    eB.innerText = 'Edit'
+    let cB = document.createElement('span')
+    cB.classList.add('clearButton','clicker')
+    cB.innerText = 'Clear'
+    lF.appendChild(eB)
+    lF.appendChild(cB)
+    document.querySelector('.toHolder').appendChild(lF)
+}
+function clearToDoList() {
+    //1. clear the contents inside .toDoList
+    document.querySelector('.toDoList').innerHTML = ''
+    //2. Clear the contents inside .ingTotals
+    document.querySelector('.ingTotals').innerHTML = ''
+    //3. Locate all of the incrementHolders where the .minus is .turnedOn
+    //console.log(document.querySelectorAll('.incrementHolder > .turnedOn').closest('.incrementHolder'))
+    document.querySelectorAll('.incrementHolder > .turnedOn').forEach(a => {
+        //3a. remove .turnedOn from .plus and .minus
+        a.classList.remove('turnedOn')
+        //3b. set the .leftSideAmount.innerText to ''
+        a.parentElement.querySelector('.leftSideAmount').innerText = ''
+    })
+    //4. remove listFunctions    
+    removeListFunctions()
+}
+function editToDoList() {
+    //1. Give a visual indication that editing of the list is being performed, prevent all other functions from happening
+    if (busyEditing) {
+        document.querySelector('.editButton').classList.remove('editing')
+        //undo all the inputs
+        document.querySelectorAll('.addedItem > .aiAmount').forEach(a => {
+            let numInput = a.querySelector('.editingNum')
+            let inputValue = numInput.value
+            console.log(inputValue)
+            if (Number(inputValue) === 0) {
+                //remove the parent and update the tile on the leftside
+                a.closest('.addedItem').classList.forEach(a => {
+                    if (a.includes('Recipe_')) {
+                        document.querySelector(`.LeftSide > .${a} > .incrementHolder > .leftSideAmount`).innerText = ''
+                        document.querySelectorAll(`.LeftSide > .${a} > .incrementHolder > .turnedOn`).forEach(b => {
+                            b.classList.remove('turnedOn')
+                        })
+                    }
+                })
+                a.closest('.addedItem').parentNode.removeChild(a.closest('.addedItem'))
+                //console.log(a.closest('.addedItem'))
+            } else {
+                numInput.parentNode.removeChild(numInput)
+                a.innerText = inputValue
+            }
+            
+        })
+        busyEditing = false
+        tallyIngredients()
+    } else {
+        document.querySelector('.editButton').classList.add('editing')
+        //2. Convert to a number field, returning
+        document.querySelectorAll('.addedItem > .aiAmount').forEach(a => {
+            //let value = a.innerText
+            let numInput = document.createElement('input')
+            numInput.type = 'number'
+            numInput.classList.add('editingNum')
+            numInput.value = a.innerText
+            a.innerText = ''
+            a.appendChild(numInput)
+            //gonna piggy back this and call tallyInredients()
+            numInput.addEventListener('input', resizeInput)
+            resizeInput.call(numInput)
+        })
+        busyEditing = true
+    }
+}
+//code to resize the number input taken from https://stackoverflow.com/questions/3392493/adjust-width-of-input-field-to-its-input
+function resizeInput() {
+    this.style.width = this.value.length + 2 + 'ch'
+    if (busyEditing) {
+        this.closest('.addedItem').classList.forEach(a => {
+            if (a.includes('Recipe_')) {
+                document.querySelector(`.LeftSide > .${a} > .incrementHolder > .leftSideAmount`).innerText = this.value
+            }
+        })
+        tallyIngredients()
+    }
+}

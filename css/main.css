@@ -532,7 +532,13 @@ body {
   display: flex;
   justify-content: space-around;
 }
-
+.editButton {
+  padding: 3px 4px 0 4px;
+}
+.editing {
+  color: red;
+  background: gray;
+}
 
 
 
